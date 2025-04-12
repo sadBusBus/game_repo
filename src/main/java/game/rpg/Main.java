@@ -19,6 +19,6 @@ public class Main {
         window.setVisible(true);
 
 
-        System.out.println("Hello, World!");
+        gamePanel.startGameThread();
     }
 }

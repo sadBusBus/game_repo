@@ -3,7 +3,7 @@ package game.rpg;
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Runnable {
 
     //SCREEN SETTINGS
 
@@ -17,10 +17,25 @@ public class GamePanel extends JPanel {
     final int screenWidth = tileSize * maxScreenCol;  // 768 pixels
     final int screenHeight = tileSize * maxScreenRow;  //576 pixels
 
+    Thread gameThread;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.WHITE);
         this.setDoubleBuffered(true);
+    }
+
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start(); //Calls run method of Runnable interface
+    }
+
+    @Override
+    public void run() {
+
+        while (gameThread != null) {
+            System.out.println("Game running...");
+        }
+
     }
 }
