@@ -8,7 +8,7 @@ public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTINGS
 
     final int originalTileSize = 16; //16x16 tile default size player/npc/map
-    final int scale = 3;
+    final int scale = 5;
 
     final int tileSize = originalTileSize * scale; //48x48 tile
     final int maxScreenCol = 16;
@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int playerX = 100;
     int playerY = 100;
-    int playerSpeed = 2;
+    int playerSpeed = 4;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -49,6 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
+        long timer = 0;
+        int drawCount = 0;
 
         while (gameThread != null) {
             //System.out.println("Game running...");
@@ -56,6 +58,8 @@ public class GamePanel extends JPanel implements Runnable {
             currentTime = System.nanoTime();
 
             delta += (currentTime - lastTime) / drawInterval;
+
+            timer += (currentTime - lastTime);
 
             lastTime = currentTime;
 
@@ -67,6 +71,14 @@ public class GamePanel extends JPanel implements Runnable {
                 repaint();
 
                 delta--;
+
+                drawCount++;
+            }
+
+            if (timer >= 1000000000) {
+                System.out.println("FPS: " + FPS);
+                drawCount = 0;
+                timer = 0;
             }
 
         }
